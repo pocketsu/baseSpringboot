@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true">  
+  
+    <!-- 文件输出格式 -->  
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] [%thread] %c [%L] - %msg%n" />  
+    <!-- 文件路径 -->  
+    <property name="FILE_PATH" value="E:/a" />
+    
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">  
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+            <pattern>${PATTERN}</pattern>  
+        </encoder>
+    </appender>
+    
+    
+	<springProfile name="dev">
+        <root level="debug">  
+            <appender-ref ref="CONSOLE" /> 
+        </root>
+ 	</springProfile>
+ 	
+ 	
+ 	<springProfile name="prod">
+ 		<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+	             <!-- 文件名称 -->
+	             <fileNamePattern>${FILE_PATH}/sys.%d{yyyy-MM-dd}.log</fileNamePattern>  
+	             <!-- 文件最大保存历史数量   
+	             <MaxHistory>100</MaxHistory>
+	             -->
+	         </rollingPolicy>
+	         
+	         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+	             <pattern>${PATTERN}</pattern>  
+	         </encoder>
+	    </appender>
+	    
+	    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+	             <!-- 文件名称 -->
+	             <fileNamePattern>${FILE_PATH}/sys.error.%d{yyyy-MM-dd}.log</fileNamePattern>  
+	             <!-- 文件最大保存历史数量   
+	             <MaxHistory>100</MaxHistory>
+	             -->
+	         </rollingPolicy>
+	         
+	         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">  
+	             <pattern>${PATTERN}</pattern>  
+	         </encoder>
+	         
+	         <!-- 只记录error级别 -->
+	         <filter class="ch.qos.logback.classic.filter.LevelFilter">
+	         	<level>error</level>
+	         	<onMatch>ACCEPT</onMatch>
+            	<onMismatch>DENY</onMismatch>
+	         </filter>
+	    </appender>
+ 	
+ 		
+ 		<root level="info">
+ 			<appender-ref ref="CONSOLE" /> 
+            <appender-ref ref="FILE" />
+            <appender-ref ref="FILE_ERROR" />
+        </root>
+        
+ 	</springProfile>
+ 	
+    
+</configuration>

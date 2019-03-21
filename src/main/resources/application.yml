@@ -1,0 +1,19 @@
+server:
+  tomcat:
+    uri-encoding: UTF-8
+    max-threads: 1000
+    min-spare-threads: 30
+  port: 8081
+  servlet:
+    context-path: /baseSpringboot
+    
+spring:
+  profiles:
+    active: dev
+    
+mybatis:
+  mapperLocations: classpath:com/sz/dao/xml/*.xml
+  typeAliasesPackage: com.sz.entity
+  
+logging:
+  config: classpath:logback-spring.xml

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sz.dao.mapper.ItemMapper" >
+  <resultMap id="ItemMap" type="com.sz.entity.Item" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="memo" property="memo" jdbcType="VARCHAR" />
+    <result column="money" property="money" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <select id="queryItem" parameterType="hashmap" resultMap="ItemMap">
+  	select id,title from item
+  	<where> 
+	  	<if test="title!=null">
+	  		and title like #{title}
+	  	</if>
+  	</where>
+  	order by title
+  </select>
+  
+</mapper>
