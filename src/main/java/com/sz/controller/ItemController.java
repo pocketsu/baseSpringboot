@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.solr.client.solrj.SolrServerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,7 +21,8 @@ import com.sz.solr.IndexEntity;
 import com.sz.solr.SolrHandler;
 import com.sz.util.RedisUtils;
 
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/item")
 public class ItemController {
 	
@@ -118,5 +121,12 @@ public class ItemController {
 			System.out.println(entity.getId()+"|"+entity.getTitle()+"|"+entity.getContent());
 		}
 		return list;
+	}
+	
+	@RequestMapping(value="/index")
+	public String index(HttpServletRequest request) {
+		List<Item> itemList=itemService.getItemList();
+		request.setAttribute("itemList", itemList);
+		return "item/index";
 	}
 }

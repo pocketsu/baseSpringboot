@@ -1,0 +1,22 @@
+<#macro head title>
+	<!DOCTYPE html>
+	<html>
+	<head>
+	
+	<#include "header.html" />
+	
+	<title>${title}</title>
+	
+	<#nested>
+	
+	</head>
+</#macro>
+
+<#macro body>
+	<body>
+	
+	<#nested>
+		
+	</body>
+	</html>
+</#macro>
